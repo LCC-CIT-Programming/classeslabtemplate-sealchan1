@@ -46,7 +46,7 @@ namespace CardClasses
                 }
                 else
                 {
-                    Console.WriteLine("Invalid value. Value must be between 1 and 13.");
+                    //Console.WriteLine("Invalid value. Value must be between 1 and 13.");
                 }
             }
         }
@@ -100,12 +100,12 @@ namespace CardClasses
             return this.value == other.value;
         }
 
-        private bool IsValidRange(int n, int max)
+        private static bool IsValidRange(int n, int max)
         {
             return (n >= 1 && n <= max);
         }
 
-        private bool IsValidSuit(int n)
+        public static bool IsValidSuit(int n)
         {
             bool retVal = false;
 
@@ -115,13 +115,13 @@ namespace CardClasses
             }
             else
             {
-                Console.WriteLine("Invalid value. Suit value must be between 1 and 4.");
+                //Console.WriteLine("Invalid value. Suit value must be between 1 and 4.");
             }
 
             return retVal;
         }
 
-        private bool IsValidValue(int n)
+        public static bool IsValidValue(int n)
         {
             
             bool retVal = false;
@@ -132,7 +132,7 @@ namespace CardClasses
             }
             else
             {
-                Console.WriteLine("Invalid value. Value must be between 1 and 13.");
+                //Console.WriteLine("Invalid value. Value must be between 1 and 13.");
             }
 
             return retVal;
@@ -212,7 +212,26 @@ namespace CardClasses
 
         public override string ToString()
         {
-            return values[value] + " of " + suits[suit];
+            bool badValue = IsValidValue(value);
+            bool badSuit = IsValidSuit(Suit);
+            /*
+            string valueText = "Invalid value";
+            String suitText = "invalid suit";
+
+            if(IsValidValue(value))
+            {
+                valueText = values[value];
+            }  
+            
+            if(!IsValidSuit)
+            //*/
+
+            return
+                (IsValidValue(value) ? values[value] : "Invalid value")
+                + 
+                " of " 
+                + 
+                (IsValidSuit(suit) ? suits[suit] : "invalid suit");
         }
 
     }
