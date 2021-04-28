@@ -50,7 +50,7 @@ namespace CardTests
             TestMatch(match, spade, true, false);
 
             // Create a random valid card with the default constructor...
-            Card testCard = TestDefaultConstructor();
+            TestDefaultConstructor();
 
             // Exit
             Console.Write("Press any key to exit > ");
@@ -67,19 +67,41 @@ namespace CardTests
             Console.WriteLine();
 
             Console.WriteLine("Creating Ace of Hearts with (1, 3)...");
-            Card aCard = new Card(1, 3);
-            Console.WriteLine("Created card > " + aCard.ToString());
-            Console.WriteLine();
+            try
+            {
+                Card aCard = new Card(1, 3);
+                Console.WriteLine("Created card > " + aCard.ToString());
+                Console.WriteLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
 
             Console.WriteLine("Creating Ace of Hearts with (1, 5) where 5 is an invalid suit...");
-            aCard = new Card(1, 5);
-            Console.WriteLine("Created card > " + aCard.ToString());
-            Console.WriteLine();
+            try
+            {
+                Card aCard = new Card(1, 5);
+                Console.WriteLine("Created card > " + aCard.ToString());
+                Console.WriteLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             Console.WriteLine("Creating Ace of Hearts with (15, 3) where 15 is an invalid value...");
-            aCard = new Card(15, 3);
-            Console.WriteLine("Created card > " + aCard.ToString());
-            Console.WriteLine();
+            try
+            {
+                Card aCard = new Card(15, 3);
+                Console.WriteLine("Created card > " + aCard.ToString());
+                Console.WriteLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         /// <summary>
@@ -146,18 +168,24 @@ namespace CardTests
         /// TestDefaultConstructor - Show a Card created randomly by the default constructor
         /// </summary>
         /// <returns></returns>
-        private static Card TestDefaultConstructor()
+        private static void TestDefaultConstructor()
         {
             Console.WriteLine("Test Default Contructor");
             Console.WriteLine();
- 
-            Card aCard = new Card();
-            Console.WriteLine("Expect valid card as provided by ToString() method > " + aCard.ToString());
-            Console.WriteLine("Should have a valid suit and IsValidSuit is " + Card.IsValidSuit(aCard.Suit).ToString());
-            Console.WriteLine("Should have a valid value and IsValidValue is " + Card.IsValidValue(aCard.Suit).ToString());
-            Console.WriteLine();
+            Card aCard;
 
-            return aCard;
+            try
+            {
+                aCard = new Card();
+                Console.WriteLine("Expect valid card as provided by ToString() method > " + aCard.ToString());
+                //Console.WriteLine("Should have a valid suit and IsValidSuit is " + Card.IsValidSuit(aCard.Suit).ToString());
+                //Console.WriteLine("Should have a valid value and IsValidValue is " + Card.IsValidValue(aCard.Suit).ToString());
+                Console.WriteLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 

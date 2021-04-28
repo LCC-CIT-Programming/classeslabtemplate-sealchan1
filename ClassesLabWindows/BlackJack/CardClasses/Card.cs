@@ -24,9 +24,13 @@ namespace CardClasses
             get { return suit; }
             set 
             { 
-                if(IsValidSuit(value))
+                if(value >= 1 && value <= 4)
                 {
                     suit = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Unable to set suit: initializing value must be in the range of 1 to 4");
                 }
             }
         }
@@ -46,7 +50,7 @@ namespace CardClasses
                 }
                 else
                 {
-                    //Console.WriteLine("Invalid value. Value must be between 1 and 13.");
+                    throw new ArgumentException("Unable to set value: initializing value must be in the range of 1 to 13");
                 }
             }
         }
@@ -54,11 +58,7 @@ namespace CardClasses
         /// <summary>
         /// Default constructor - Creates valid random card
         /// </summary>
-        public Card()
-        {
-            value = generator.Next(1, 14);
-            suit = generator.Next(1, 5);
-        }
+        public Card() : this (generator.Next(1, 14), generator.Next(1, 5)) { }
 
         /// <summary>
         /// Constructor
@@ -67,18 +67,17 @@ namespace CardClasses
         /// <param name="suit">Integer value for the suit of the card</param>
         public Card(int val, int suit)
         {
-            if(IsValidValue(val))
+            try
             {
-                value = val;
+                this.Value = val;
+                this.Suit = suit;
             }
-
-            if (IsValidSuit(suit))
+            catch(ArgumentException ex)
             {
-                value = val;
+                throw new ArgumentException("Unable to create Card: " + ex.Message);
             }
-
-            this.suit = suit;
         }
+
 
         /// <summary>
         /// hasMatchingSuit()
@@ -100,11 +99,12 @@ namespace CardClasses
             return this.value == other.value;
         }
 
+        /*
         private static bool IsValidRange(int n, int max)
         {
             return (n >= 1 && n <= max);
         }
-
+                
         public static bool IsValidSuit(int n)
         {
             bool retVal = false;
@@ -137,6 +137,7 @@ namespace CardClasses
 
             return retVal;
         }
+        //*/
 
         /// <summary>
         /// IsAce()
@@ -212,19 +213,11 @@ namespace CardClasses
 
         public override string ToString()
         {
+            return (values[value] + " of " + suits[suit]);
+
+            /*
             bool badValue = IsValidValue(value);
             bool badSuit = IsValidSuit(Suit);
-            /*
-            string valueText = "Invalid value";
-            String suitText = "invalid suit";
-
-            if(IsValidValue(value))
-            {
-                valueText = values[value];
-            }  
-            
-            if(!IsValidSuit)
-            //*/
 
             return
                 (IsValidValue(value) ? values[value] : "Invalid value")
@@ -232,6 +225,7 @@ namespace CardClasses
                 " of " 
                 + 
                 (IsValidSuit(suit) ? suits[suit] : "invalid suit");
+            //*/
         }
 
     }
