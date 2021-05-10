@@ -89,5 +89,39 @@ namespace CustomerProductClasses
         {
             return String.Format("Id: {0} Code: {1} Description: {2} UnitPrice: {3:C} Quantity: {4}", id, code, description, unitPrice, quantity);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || obj.GetType() != this.GetType())
+                return false;
+            else
+            {
+                Product other = (Product)obj;
+                return other.Id == Id &&
+                    other.Code == Code &&
+                    other.Description == Description &&
+                    other.UnitPrice == UnitPrice &&
+                    other.QuantityOnHand == QuantityOnHand;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return 13 + 7 * id.GetHashCode() +
+                7 * code.GetHashCode() +
+                7 * description.GetHashCode() +
+                7 * unitPrice.GetHashCode() +
+                7 * quantity.GetHashCode();
+        }
+
+        public static bool operator ==(Product p1, Product p2)
+        {
+            return p1.Equals(p2);
+        }
+
+        public static bool operator !=(Product p1, Product p2)
+        {
+            return !p1.Equals(p2);
+        }
     }
 }
