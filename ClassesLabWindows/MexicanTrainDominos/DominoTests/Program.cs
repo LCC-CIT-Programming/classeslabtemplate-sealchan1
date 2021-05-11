@@ -12,7 +12,13 @@ namespace DominoTests
     {
         static void Main(string[] args)
         {
+            // BoneYard Tests
+            //TestBoneYardConstructor();
+            //TestBoneYardShuffle();
+            TestBoneYardDraw();
 
+            /*
+            // Domino Tests
             TestDominoConstructors();
             TestDominoToString();
             TestDominoPropertyGetters();
@@ -21,10 +27,66 @@ namespace DominoTests
             TestDominoScore();
             TestDominoIsDouble();
             TestDominoPropertySettersWithExceptions();
+            //*/
 
             Console.ReadLine();
         }
 
+        #region ---BoneYard Tests---
+        static void TestBoneYardConstructor()
+        {
+            int dotMax = 6;
+            BoneYard set = new BoneYard(dotMax);
+
+            Console.WriteLine("Testing set of dominos constructor");
+            Console.WriteLine("NumCards.  Expecting 28. " + set.DominosRemaining);
+            Console.WriteLine("IsEmpty.   Expecting false. " + set.IsEmpty());
+            Console.WriteLine("ToString.  Expect a long list of dominos in order.\n" + set.ToString());
+            Console.WriteLine();
+        }
+        
+        static void TestBoneYardShuffle()
+        {
+            int dotMax = 6;
+            BoneYard set = new BoneYard(dotMax);
+
+            set.Shuffle();
+            Console.WriteLine("Testing set of dominos to shuffle");
+            Console.WriteLine("NumCards.  Expecting 28. " + set.DominosRemaining);
+            Console.WriteLine("IsEmpty.   Expecting false. " + set.IsEmpty());
+            Console.WriteLine("First domino will rarely be Side 1: 0 Side 2: 0 > " + set[0]);
+            Console.WriteLine("ToString.  Expect a ton of cards in shuffled order.\n" + set.ToString());
+            Console.WriteLine();
+        }
+
+        static void TestBoneYardDraw()
+        {
+            int dotMax = 6;
+            BoneYard set = new BoneYard(dotMax);
+
+            Domino d = set.Draw();
+
+            Console.WriteLine("Testing boneyard of dominos draw");
+            Console.WriteLine("DominosRemaining.  Expecting 27. " + set.DominosRemaining);
+            Console.WriteLine("IsEmpty.   Expecting false. " + set.IsEmpty());
+            Console.WriteLine("Domino drawn should be Side 1: 0 Side 2: 0 > " + d.ToString());
+
+            // now let's deal them all and see what happens at the end
+            int total = set.DominosRemaining;
+            for (int i = 1; i <= total; i++)
+                d = set.Draw();
+            Console.WriteLine("Drew all 28 dominos");
+            Console.WriteLine("DominosRemaining.  Expecting 0. " + set.DominosRemaining);
+            Console.WriteLine("IsEmpty.   Expecting true. " + set.IsEmpty());
+            Console.WriteLine("Last domino should be Side 1: 6 Side 2: 6 > " + d);
+            Console.WriteLine("Drawing again should return null. Expecting true. " + (set.Draw() == null));
+
+            Console.WriteLine();
+        }
+        #endregion
+
+
+        #region ---Domino Tests---
         static void TestDominoConstructors()
         {
             Domino d1 = new Domino();
@@ -150,5 +212,6 @@ namespace DominoTests
             Console.WriteLine("After.  Expecting 6, 12. " + d1);
             Console.WriteLine();
         }
+        #endregion
     }
 }
