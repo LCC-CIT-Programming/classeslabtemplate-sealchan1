@@ -12,6 +12,27 @@ namespace CardTests
     {
         static void Main(string[] args)
         {
+            // Hand Testing
+            Console.WriteLine("Creating a shuffled deck...");
+            Console.WriteLine();
+
+            Deck d = new Deck();
+            d.Shuffle();
+            Random ranGen = new Random();
+            int rnd = ranGen.Next(2, 14);
+
+            Hand h = TestHandConstructor(d, rnd);
+
+            ContinuePrompt();
+
+            TestAddGetNumCard(d, h, rnd);
+
+            ContinuePrompt();
+
+            TestIndexOfHasCardDiscard(h, ranGen);
+
+
+            #region ---Tests---
             // Deck Testing
             //TestDeckConstructor();
             //TestDeckShuffle();
@@ -59,11 +80,121 @@ namespace CardTests
             // Create a random valid card with the default constructor...
             TestDefaultConstructor();
             //*/
+            #endregion
 
             // Exit
             Console.Write("Press any key to exit > ");
             Console.ReadKey();
         }
+
+        #region ---Hand Tests---
+        private static Hand TestHandConstructor(Deck d, int num)
+        {
+            Console.WriteLine("Test parametered constructor");
+            Console.WriteLine();
+
+            Console.WriteLine("Creating a Hand object from " + num.ToString()
+                + " cards from a Deck");
+            Hand retVal = new Hand(d, num);
+            Console.WriteLine("Result:");
+            Console.WriteLine(retVal.ToString());
+
+            return retVal;
+        }
+
+        private static void TestAddGetNumCard(Deck d, Hand h, int num)
+        {
+            Console.WriteLine("Check number of Cards in Hand");
+            Console.WriteLine("Expect: " + num.ToString());
+            Console.WriteLine("Result: " + h.NumCards.ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("Add a card to the Hand from the Deck");
+            Card c = d.Deal();
+            h.AddCard(c);
+
+            Console.WriteLine("Check number of Cards in Hand");
+            Console.WriteLine("Expect: " + (num + 1).ToString());
+            Console.WriteLine("Result: " + h.NumCards.ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("Get card just added to Hand");
+            Console.WriteLine("Expected: " + c.ToString());
+            Console.WriteLine("Result: " + h.GetCard(num).ToString());
+            Console.WriteLine();
+        } 
+
+        private static void TestIndexOfHasCardDiscard(Hand h, Random ranGen)
+        {
+            Console.WriteLine("Choose a random Card from the Hand");
+            int rnd = ranGen.Next(0, h.NumCards);
+            Card c = h.GetCard(rnd);
+            Console.WriteLine("Card at index " + rnd.ToString()
+                + " is " + c.ToString());
+
+            Console.WriteLine("Test IndexOf(Card)");
+            Console.WriteLine("Expect: " + rnd.ToString());
+            Console.WriteLine("Result: " + h.IndexOf(c));
+            Console.WriteLine();
+            Console.WriteLine("Test IndexOf(Value)");
+            Console.WriteLine("Expect: " + rnd.ToString());
+            Console.WriteLine("Result: " + h.IndexOf(c.Value));
+            Console.WriteLine();
+            Console.WriteLine("Test IndexOf(Suit, Value)");
+            Console.WriteLine("Expect: " + rnd.ToString());
+            Console.WriteLine("Result: " + h.IndexOf(c.Suit, c.Value));
+            Console.WriteLine();
+
+            Console.WriteLine("Test HasCard(Card)");
+            Console.WriteLine("Expect: True");
+            Console.WriteLine("Result: " + h.HasCard(c));
+            Console.WriteLine();
+            Console.WriteLine("Test HasCard(Value)");
+            Console.WriteLine("Expect: True");
+            Console.WriteLine("Result: " + h.HasCard(c.Value));
+            Console.WriteLine();
+            Console.WriteLine("Test HasCard(Suit, Value)");
+            Console.WriteLine("Expect: True");
+            Console.WriteLine("Result: " + h.HasCard(c.Suit, c.Value));
+            Console.WriteLine();
+
+            ContinuePrompt();
+
+            Console.WriteLine("Discard that Card");
+            Card dis = h.Discard(rnd);
+            Console.WriteLine("The card " + dis.ToString()
+                + " at index " + rnd.ToString()
+                + " has been discarded");
+
+            Console.WriteLine("Test IndexOf(Card)");
+            Console.WriteLine("Expect: -1");
+            Console.WriteLine("Result: " + h.IndexOf(c));
+            Console.WriteLine();
+            Console.WriteLine("Test IndexOf(Value)");
+            Console.WriteLine("Expect: -1");
+            Console.WriteLine("Result: " + h.IndexOf(c.Value));
+            Console.WriteLine();
+            Console.WriteLine("Test IndexOf(Suit, Value)");
+            Console.WriteLine("Expect: -1");
+            Console.WriteLine("Result: " + h.IndexOf(c.Suit, c.Value));
+            Console.WriteLine();
+
+            Console.WriteLine("Test HasCard(Card)");
+            Console.WriteLine("Expect: False");
+            Console.WriteLine("Result: " + h.HasCard(c));
+            Console.WriteLine();
+            Console.WriteLine("Test HasCard(Value)");
+            Console.WriteLine("Expect: False");
+            Console.WriteLine("Result: " + h.HasCard(c.Value));
+            Console.WriteLine();
+            Console.WriteLine("Test HasCard(Suit, Value)");
+            Console.WriteLine("Expect: False");
+            Console.WriteLine("Result: " + h.HasCard(c.Suit, c.Value));
+            Console.WriteLine();
+
+        }
+
+        #endregion
 
         #region ---Deck Tests---
         static void TestDeckConstructor()

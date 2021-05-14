@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CardClassDiagram.cd" />
+    <None Include="Hand.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
