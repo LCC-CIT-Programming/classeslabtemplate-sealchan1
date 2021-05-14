@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace CustomerProductClasses
 {
+    // I added this for xml serialization.  Nothing else in this class has changed.
+    [XmlType("Product")] // define Type
+    [XmlInclude(typeof(Clothing)), XmlInclude(typeof(Gear))]
     public class Product
     {
         private int id;

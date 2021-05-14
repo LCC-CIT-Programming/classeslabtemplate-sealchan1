@@ -8,13 +8,17 @@ namespace CardClasses
 {
     public class Card
     {
+        
         private static string[] values = { "", "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "Ten", "Jack", "Queen", "King" };
         private static string[] suits = { "", "Clubs", "Diamonds", "Hearts", "Spades" };
         private static Random generator = new Random();
 
+        #region ---Fields---
         private int value;
         private int suit;
+        #endregion
 
+        #region ---Properties---
         /// <summary>
         /// Suit - Integer representing the suit of the card
         /// (see static string array suits[])
@@ -54,7 +58,9 @@ namespace CardClasses
                 }
             }
         }
+        #endregion
 
+        #region ---Constructors---
         /// <summary>
         /// Default constructor - Creates valid random card
         /// </summary>
@@ -77,8 +83,9 @@ namespace CardClasses
                 throw new ArgumentException("Unable to create Card: " + ex.Message);
             }
         }
+        #endregion
 
-
+        #region ---Methods---
         /// <summary>
         /// hasMatchingSuit()
         /// </summary>
@@ -98,46 +105,6 @@ namespace CardClasses
         {
             return this.value == other.value;
         }
-
-        /*
-        private static bool IsValidRange(int n, int max)
-        {
-            return (n >= 1 && n <= max);
-        }
-                
-        public static bool IsValidSuit(int n)
-        {
-            bool retVal = false;
-
-            if (IsValidRange(n, 4))
-            {
-                retVal = true;
-            }
-            else
-            {
-                //Console.WriteLine("Invalid value. Suit value must be between 1 and 4.");
-            }
-
-            return retVal;
-        }
-
-        public static bool IsValidValue(int n)
-        {
-            
-            bool retVal = false;
-
-            if (IsValidRange(n, 13))
-            {
-                retVal = true;
-            }
-            else
-            {
-                //Console.WriteLine("Invalid value. Value must be between 1 and 13.");
-            }
-
-            return retVal;
-        }
-        //*/
 
         /// <summary>
         /// IsAce()
@@ -210,23 +177,34 @@ namespace CardClasses
         {
             return suit == 4;
         }
+        #endregion
 
+        #region ---Overs---
         public override string ToString()
         {
             return (values[value] + " of " + suits[suit]);
-
-            /*
-            bool badValue = IsValidValue(value);
-            bool badSuit = IsValidSuit(Suit);
-
-            return
-                (IsValidValue(value) ? values[value] : "Invalid value")
-                + 
-                " of " 
-                + 
-                (IsValidSuit(suit) ? suits[suit] : "invalid suit");
-            //*/
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || obj.GetType() != this.GetType())
+                return false;
+            else
+            {
+                Card other = (Card)obj;
+                return 
+                    other.Suit == Suit 
+                    &&
+                    other.Value == Value;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return 13 + 7 * suit.GetHashCode() +
+                7 * value.GetHashCode();
+        }
+        #endregion
 
     }
 }
