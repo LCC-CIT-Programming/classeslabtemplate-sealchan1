@@ -12,6 +12,15 @@ namespace CardTests
     {
         static void Main(string[] args)
         {
+            // BJHand Testing
+            TestBJHandConstructor();
+
+            ContinuePrompt();
+
+            TestScoreIsBusted();
+
+            #region ---More Tests---
+            /*
             // Hand Testing
             Console.WriteLine("Creating a shuffled deck...");
             Console.WriteLine();
@@ -30,9 +39,8 @@ namespace CardTests
             ContinuePrompt();
 
             TestIndexOfHasCardDiscard(h, ranGen);
+            //*/
 
-
-            #region ---Tests---
             // Deck Testing
             //TestDeckConstructor();
             //TestDeckShuffle();
@@ -86,6 +94,122 @@ namespace CardTests
             Console.Write("Press any key to exit > ");
             Console.ReadKey();
         }
+
+        #region ---BJHand Tests---
+        private static void TestBJHandConstructor()
+        {
+            Console.WriteLine("Test BJHand constructor");
+            Console.WriteLine();
+
+            Console.WriteLine("Creating a BJHand with 2 cards...");
+
+            Deck d = new Deck();
+            BJHand bjHand = new BJHand(d, 2);
+
+            Console.WriteLine("Expect: BJHand has 2 cards");
+            Console.WriteLine("Result: BJHand has " + bjHand.NumCards.ToString() + " cards");
+            Console.WriteLine();
+        }
+
+        private static void TestScoreIsBusted()
+        {
+            Random ranGen = new Random();
+
+            // Non-Face Cards, Non-Aces
+            Console.WriteLine("Testing non-face cards, non-Aces scoring...");
+            Console.WriteLine();
+
+            BJHand bjHand = new BJHand();
+            bjHand.AddCard(new Card(2, ranGen.Next(1, 5)));
+            bjHand.AddCard(new Card(8, ranGen.Next(1, 5)));
+
+            Console.WriteLine(bjHand.ToString());
+
+            Console.WriteLine("Expect: Score = 10");
+            Console.WriteLine("Result: Score = " + bjHand.Score.ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("Expect: IsBusted = False");
+            Console.WriteLine("Result: IsBusted = " + bjHand.IsBusted.ToString());
+            Console.WriteLine();
+
+            bjHand.AddCard(new Card(9, ranGen.Next(1, 5)));
+            bjHand.AddCard(new Card(5, ranGen.Next(1, 5)));
+
+            Console.WriteLine(bjHand.ToString());
+
+            Console.WriteLine("Expect: Score = 24");
+            Console.WriteLine("Result: Score = " + bjHand.Score.ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("Expect: IsBusted = True");
+            Console.WriteLine("Result: IsBusted = " + bjHand.IsBusted.ToString());
+            Console.WriteLine();
+
+            ContinuePrompt();
+
+            // Face Cards
+            Console.WriteLine("Testing face card scoring ...");
+            Console.WriteLine();
+
+            bjHand = new BJHand();
+            bjHand.AddCard(new Card(11, ranGen.Next(1, 5)));
+            bjHand.AddCard(new Card(12, ranGen.Next(1, 5)));
+
+            Console.WriteLine(bjHand.ToString());
+
+            Console.WriteLine("Expect: Score = 20");
+            Console.WriteLine("Result: Score = " + bjHand.Score.ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("Expect: IsBusted = False");
+            Console.WriteLine("Result: IsBusted = " + bjHand.IsBusted.ToString());
+            Console.WriteLine();
+
+            bjHand.AddCard(new Card(13, ranGen.Next(1, 5)));
+
+            Console.WriteLine(bjHand.ToString());
+
+            Console.WriteLine("Expect: Score = 30");
+            Console.WriteLine("Result: Score = " + bjHand.Score.ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("Expect: IsBusted = True");
+            Console.WriteLine("Result: IsBusted = " + bjHand.IsBusted.ToString());
+            Console.WriteLine();
+
+            ContinuePrompt();
+
+            Console.WriteLine("Testing ace scoring ...");
+            Console.WriteLine();
+
+            bjHand = new BJHand();
+            bjHand.AddCard(new Card(1, ranGen.Next(1, 5)));
+            bjHand.AddCard(new Card(10, ranGen.Next(1, 5)));
+
+            Console.WriteLine(bjHand.ToString());
+
+            Console.WriteLine("Expect: Score = 21");
+            Console.WriteLine("Result: Score = " + bjHand.Score.ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("Expect: IsBusted = False");
+            Console.WriteLine("Result: IsBusted = " + bjHand.IsBusted.ToString());
+            Console.WriteLine();
+
+            bjHand.AddCard(new Card(1, ranGen.Next(1, 5)));
+
+            Console.WriteLine(bjHand.ToString());
+
+            Console.WriteLine("Expect: Score = 12");
+            Console.WriteLine("Result: Score = " + bjHand.Score.ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("Expect: IsBusted = False");
+            Console.WriteLine("Result: IsBusted = " + bjHand.IsBusted.ToString());
+            Console.WriteLine();
+        }
+        #endregion
 
         #region ---Hand Tests---
         private static Hand TestHandConstructor(Deck d, int num)
