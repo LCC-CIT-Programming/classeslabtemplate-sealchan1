@@ -38,11 +38,13 @@ namespace CustomerProductClasses
             products.Add(product);
         }
 
+        /*
         public void Add(int id, string code, string description, decimal price, int quantity)
         {
             Product p = new Product(id, code, description, price, quantity);
             products.Add(p);
         }
+        //*/
 
         public void Remove(Product product)
         {
@@ -101,5 +103,24 @@ namespace CustomerProductClasses
             pl.Remove(p);
             return pl;
         }
+
+        #region Abstract Classes changes
+
+        // this is a new property.  It illustrates the use of the abstract property ShippingCharge
+        public decimal ShippingCharge
+        {
+            get
+            {
+                decimal total = 0;
+                foreach (Product p in products)
+                    // this won't work unless ALL classes implement shippingcharge
+                    total += p.ShippingCharge;
+
+                return total;
+
+            }
+        }
+
+        #endregion
     }
 }

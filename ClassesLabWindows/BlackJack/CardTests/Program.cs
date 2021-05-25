@@ -12,12 +12,14 @@ namespace CardTests
     {
         static void Main(string[] args)
         {
+            /*
             // BJHand Testing
             TestBJHandConstructor();
 
             ContinuePrompt();
 
             TestScoreIsBusted();
+            //*/ 
 
             #region ---More Tests---
             /*

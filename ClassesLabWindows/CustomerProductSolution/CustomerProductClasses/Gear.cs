@@ -92,6 +92,7 @@ namespace CustomerProductClasses
             }
         }
 
+
         // Replace version in Product with gear specific version
         public override string ToString()
         {
@@ -125,6 +126,17 @@ namespace CustomerProductClasses
                 7 * brand.GetHashCode() +
                 7 * feature.GetHashCode() +
                 7 * weight.GetHashCode();
+        }
+
+
+        // here's the implementation of the abstract property getter.  Notice that the heading has to match exactly.
+        // if you comment this property out, the code will not compile
+        public override decimal ShippingCharge
+        {
+            get
+            {
+                return 1M * (decimal)Weight;
+            }
         }
     }
 }

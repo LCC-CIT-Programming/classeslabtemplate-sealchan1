@@ -103,6 +103,16 @@ namespace CustomerProductClasses
             }
         }
 
+        // here's the implementation of the abstract property getter.  Notice that the heading has to match exactly.
+        // if you comment this property out, the code will not compile
+        public override decimal ShippingCharge
+        {
+            get
+            {
+                return 1M;
+            }
+        }
+
         // Replace ToString in Product with this clothing specific version of ToString
         public override string ToString()
         {
