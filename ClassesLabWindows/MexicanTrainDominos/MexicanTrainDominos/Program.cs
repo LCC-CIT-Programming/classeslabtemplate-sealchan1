@@ -12,21 +12,70 @@ namespace MexicanTrainDominos
     {
         static void Main(string[] args)
         {
-            #region ---MexicanTrain Tests
-            //* Mexican Train Tests
+            #region ---PlayerTrain Tests---
+            //*
+            TestOpenCloseIsOpen();
+
+            //*/
+            #endregion
+
+
+            #region ---MexicanTrain Tests---
+            /* Mexican Train Tests
             TestMTConstructorProperties();
 
             ContinuePrompt();
 
             TestMTIsPlayable();
+
+            ContinuePrompt();
+
+            TestMTPlay();
             //*/
-            #endregion
+            #endregion---
 
 
             // Exit
             Console.Write("Press any key to exit > ");
             Console.ReadKey();
         }
+
+
+        #region ---PlayerTrain Tests---
+
+        private static void TestOpenCloseIsOpen()
+        {
+            Console.WriteLine("Testing Open(), Close(), IsOpen");
+            Console.WriteLine(); 
+            
+            Random rndGen = new Random();
+            int engVal = rndGen.Next(1, 7);
+            PlayerTrain test = new PlayerTrain(engVal);
+
+            Console.WriteLine("Expect: IsOpen = False");
+            Console.WriteLine("Result: IsOpen = " + test.IsOpen.ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("Calling Open()");
+            Console.WriteLine();
+
+            test.Open();
+
+            Console.WriteLine("Expect: IsOpen = True");
+            Console.WriteLine("Result: IsOpen = " + test.IsOpen.ToString());
+            Console.WriteLine();
+
+            Console.WriteLine("Calling Close()");
+            Console.WriteLine();
+
+            test.Close();
+
+            Console.WriteLine("Expect: IsOpen = False");
+            Console.WriteLine("Result: IsOpen = " + test.IsOpen.ToString());
+            Console.WriteLine();
+        }
+
+        #endregion
 
 
         #region ---MexicanTrain Tests---
@@ -112,7 +161,6 @@ namespace MexicanTrainDominos
             b.Shuffle();
 
             const int LOOPS = 10;
-            //Domino[] drawn = new Domino[LOOPS];
 
             Console.WriteLine("Engine value = " + engVal);
             Console.WriteLine("Playable value = " + test.PlayableValue);
@@ -123,8 +171,6 @@ namespace MexicanTrainDominos
             for (int i = 0; i < LOOPS; i++)
             {
                 d = b.Draw();
-                //Domino trainD = test.LastDomino;
-                
                 Console.WriteLine(d.ToString());
 
                 bool checkPlay = d.Side1 == test.PlayableValue || d.Side2 == test.PlayableValue;
@@ -138,12 +184,71 @@ namespace MexicanTrainDominos
                 Console.WriteLine("Result: " + mustFlip.ToString());
                 Console.WriteLine();
             }
-
-            
-
-
         }
 
+        private static void TestMTPlay()
+        {
+            Console.WriteLine("Test MexicanTrain Play");
+            Console.WriteLine();
+
+            const int MAXDOTS = 6;
+            Random rndGen = new Random();
+            int engVal = rndGen.Next(1, MAXDOTS + 1);
+            
+            // Test Train
+            MexicanTrain test = new MexicanTrain(engVal);
+            
+            // Shuffled Boneyard
+            BoneYard b = new BoneYard(MAXDOTS);
+            b.Shuffle();
+
+            // Find Unplayable
+            Hand h = new Hand();
+            Domino d;
+            do
+            {
+                d = b.Draw();
+            } while (test.IsPlayable(h, d, out bool mustFlip));
+
+            Console.WriteLine("Test unplayable");
+            Console.WriteLine();
+            Console.WriteLine("Train playable value: " + test.PlayableValue.ToString());
+            Console.WriteLine("Drew unplayable: " + d.ToString());
+            Console.WriteLine("Train Before: " + test.ToString());
+
+            Console.WriteLine("Expect: Domino " + d.ToString() + "does not match last domino in the train and cannot be played.");
+            string result = String.Empty;
+
+            try
+            {
+                test.Play(h, d);
+            }
+            catch(Exception ex)
+            {
+                result = ex.Message;
+            }
+
+            Console.WriteLine("Result: " + result);
+
+            Console.WriteLine("Train After: " + test.ToString());
+            Console.WriteLine();
+
+            //Find Playable
+            do
+            {
+                d = b.Draw();
+            } while (!test.IsPlayable(h, d, out bool mustFlip));
+
+            Console.WriteLine("Test playable");
+            Console.WriteLine();
+            Console.WriteLine("Train playable value: " + test.PlayableValue.ToString());
+            Console.WriteLine("Drew playable: " + d.ToString());
+            Console.WriteLine("Train Before: " + test.ToString());
+            
+            test.Play(h, d);
+
+            Console.WriteLine("Train After: " + test.ToString());
+        }
 
         #endregion
 

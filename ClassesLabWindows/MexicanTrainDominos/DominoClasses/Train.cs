@@ -177,8 +177,8 @@ namespace DominoClasses
             }
             else
             {
-                throw new Exception("Domino" + d.ToString()
-                    + "does not match last domino in the train and cannot be played.");
+                throw new Exception("Domino " + d.ToString()
+                    + " does not match last domino in the train and cannot be played.");
             }
         }
 
