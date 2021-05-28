@@ -89,7 +89,15 @@ namespace DominoClasses
         {
             get
             {
-                return LastDomino.Side2;
+                if(IsEmpty)
+                {
+                    return engineValue;
+                }
+                else
+                {
+                    return LastDomino.Side2;
+                }
+                
             }
         }
 

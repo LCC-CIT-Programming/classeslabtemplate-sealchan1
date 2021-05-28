@@ -16,7 +16,9 @@ namespace MexicanTrainDominos
             //* Mexican Train Tests
             TestMTConstructorProperties();
 
+            ContinuePrompt();
 
+            TestMTIsPlayable();
             //*/
             #endregion
 
@@ -96,9 +98,64 @@ namespace MexicanTrainDominos
             Console.WriteLine();
         }
 
+        private static void TestMTIsPlayable()
+        {
+            Console.WriteLine("Test MexicanTrain IsPlayable");
+            Console.WriteLine();
 
-        
+            Random rndGen = new Random();
+            int engVal = rndGen.Next(1, 7);
+            MexicanTrain test = new MexicanTrain(engVal);
+
+            const int MAXDOTS = 6;
+            BoneYard b = new BoneYard(MAXDOTS);
+            b.Shuffle();
+
+            const int LOOPS = 10;
+            //Domino[] drawn = new Domino[LOOPS];
+
+            Console.WriteLine("Engine value = " + engVal);
+            Console.WriteLine("Playable value = " + test.PlayableValue);
+            Console.WriteLine();
+
+            Domino d;
+
+            for (int i = 0; i < LOOPS; i++)
+            {
+                d = b.Draw();
+                //Domino trainD = test.LastDomino;
+                
+                Console.WriteLine(d.ToString());
+
+                bool checkPlay = d.Side1 == test.PlayableValue || d.Side2 == test.PlayableValue;
+                bool checkFlip = checkPlay ? d.Side1 != test.PlayableValue : false;  // Good form?
+
+                Console.WriteLine("Test IsPlayable");
+                Console.WriteLine("Expect: " + checkPlay.ToString());
+                Console.WriteLine("Result: " + test.IsPlayable(new Hand(), d, out bool mustFlip).ToString());
+                Console.WriteLine("Test mustFlip");
+                Console.WriteLine("Expect: " + checkFlip.ToString());
+                Console.WriteLine("Result: " + mustFlip.ToString());
+                Console.WriteLine();
+            }
+
+            
+
+
+        }
+
 
         #endregion
+
+        /// <summary>
+        /// ContinuePrompt - Key press for human control of console output pacing
+        /// </summary>
+        private static void ContinuePrompt()
+        {
+            Console.Write("Press any key to continue > ");
+            Console.ReadKey();
+            Console.WriteLine();
+            Console.WriteLine();
+        }
     }
 }
