@@ -15,8 +15,7 @@ namespace DominoTests
             // BoneYard Tests
             //TestBoneYardConstructor();
             //TestBoneYardShuffle();
-            TestBoneYardDraw();
-
+            //TestBoneYardDraw();
             /*
             // Domino Tests
             TestDominoConstructors();
@@ -27,6 +26,7 @@ namespace DominoTests
             TestDominoScore();
             TestDominoIsDouble();
             TestDominoPropertySettersWithExceptions();
+
             //*/
 
             Console.ReadLine();

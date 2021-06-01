@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CustomerProductClasses
 {
-    public class ProductList
+    public class ProductList : IEnumerable<Product>
     {
         private List<Product> products;
 
@@ -31,6 +32,11 @@ namespace CustomerProductClasses
         public void Save()
         {
             ProductDB.SaveProducts(products);
+        }
+
+        public void Sort()
+        {
+            products.Sort();
         }
 
         public void Add(Product product)
@@ -60,6 +66,7 @@ namespace CustomerProductClasses
             }
             return output;
         }
+
 
         public Product this[int i]
         {
@@ -119,6 +126,20 @@ namespace CustomerProductClasses
                 return total;
 
             }
+        }
+
+        #endregion
+
+        #region ---Interface Implementation---
+
+        public IEnumerator<Product> GetEnumerator()
+        {
+            return ((IEnumerable<Product>)products).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return ((IEnumerable)products).GetEnumerator();
         }
 
         #endregion

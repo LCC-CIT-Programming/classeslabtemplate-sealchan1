@@ -13,15 +13,18 @@ namespace MexicanTrainDominos
         static void Main(string[] args)
         {
             #region ---PlayerTrain Tests---
-            //*
+            /*
             TestOpenCloseIsOpen();
 
+            ContinuePrompt();
+
+            TestPTIsPlayable();
             //*/
             #endregion
 
 
             #region ---MexicanTrain Tests---
-            /* Mexican Train Tests
+            //* Mexican Train Tests
             TestMTConstructorProperties();
 
             ContinuePrompt();
@@ -31,11 +34,20 @@ namespace MexicanTrainDominos
             ContinuePrompt();
 
             TestMTPlay();
+
+            ContinuePrompt();
+
+            TestSortTrain();
+
+            ContinuePrompt();
+
+            TestForeach();
             //*/
             #endregion---
 
 
             // Exit
+            Console.WriteLine();
             Console.Write("Press any key to exit > ");
             Console.ReadKey();
         }
@@ -73,6 +85,57 @@ namespace MexicanTrainDominos
             Console.WriteLine("Expect: IsOpen = False");
             Console.WriteLine("Result: IsOpen = " + test.IsOpen.ToString());
             Console.WriteLine();
+        }
+
+        private static void TestPTIsPlayable()
+        {
+            Console.WriteLine("Test PlayerTrain IsPlayable");
+            Console.WriteLine();
+
+            Random rndGen = new Random();
+            int engVal = rndGen.Next(1, 7);
+            PlayerTrain test = new PlayerTrain(engVal);
+
+            const int MAXDOTS = 6;
+            BoneYard b = new BoneYard(MAXDOTS);
+            b.Shuffle();
+
+            const int LOOPS = 10;
+
+            Console.WriteLine("Engine value = " + engVal);
+            Console.WriteLine("Playable value = " + test.PlayableValue);
+            Console.WriteLine();
+
+            Domino d;
+
+            for (int i = 0; i < LOOPS; i++)
+            {
+                d = b.Draw();
+                Console.WriteLine(d.ToString());
+
+                if (rndGen.Next(1, 3) % 2 == 0)
+                {
+                    test.Open();
+                    Console.WriteLine("The player's hand is open");
+                }
+                else
+                {
+                    test.Close();
+                    Console.WriteLine("The player's hand is closed");
+                }
+                Console.WriteLine();
+
+                bool checkPlay = test.IsOpen && (d.Side1 == test.PlayableValue || d.Side2 == test.PlayableValue);
+                bool checkFlip = checkPlay ? d.Side1 != test.PlayableValue : false;  // Good form?
+
+                Console.WriteLine("Test IsPlayable");
+                Console.WriteLine("Expect: " + checkPlay.ToString());
+                Console.WriteLine("Result: " + test.IsPlayable(new Hand(), d, out bool mustFlip).ToString());
+                Console.WriteLine("Test mustFlip");
+                Console.WriteLine("Expect: " + checkFlip.ToString());
+                Console.WriteLine("Result: " + mustFlip.ToString());
+                Console.WriteLine();
+            }
         }
 
         #endregion
@@ -216,7 +279,7 @@ namespace MexicanTrainDominos
             Console.WriteLine("Drew unplayable: " + d.ToString());
             Console.WriteLine("Train Before: " + test.ToString());
 
-            Console.WriteLine("Expect: Domino " + d.ToString() + "does not match last domino in the train and cannot be played.");
+            Console.WriteLine("Expect: Domino " + d.ToString() + " does not match last domino in the train and cannot be played.");
             string result = String.Empty;
 
             try
@@ -248,6 +311,65 @@ namespace MexicanTrainDominos
             test.Play(h, d);
 
             Console.WriteLine("Train After: " + test.ToString());
+        }
+
+        private static void TestSortTrain()
+        {
+            Console.WriteLine("Test MexicanTrain Sort()");
+            Console.WriteLine();
+
+            Random rndGen = new Random();
+            int engVal = rndGen.Next(1, 7);
+            MexicanTrain test = new MexicanTrain(engVal);
+
+            const int MAXDOTS = 6;
+            BoneYard b = new BoneYard(MAXDOTS);
+            b.Shuffle();
+
+            const int LOOPS = 10;
+
+            for (int i = 0; i < LOOPS; i++)
+            {
+                test.Add(b.Draw());
+            }
+
+            Console.WriteLine("Before sort: \n" + test.ToString());
+            Console.WriteLine();
+
+            test.Sort();
+
+            Console.WriteLine("After sort: \n" + test.ToString());
+            Console.WriteLine();
+        }
+
+        private static void TestForeach()
+        {
+            Console.WriteLine("Test Foreach");
+            Console.WriteLine();
+
+            Random rndGen = new Random();
+            int engVal = rndGen.Next(1, 7);
+            MexicanTrain test = new MexicanTrain(engVal);
+
+            const int MAXDOTS = 6;
+            BoneYard b = new BoneYard(MAXDOTS);
+            b.Shuffle();
+
+            const int LOOPS = 10;
+
+            for (int i = 0; i < LOOPS; i++)
+            {
+                test.Add(b.Draw());
+            }
+
+            Console.WriteLine("Foreach:");
+            Console.WriteLine();
+
+            foreach(Domino d in test)
+            {
+                Console.WriteLine(d.ToString());
+            }
+
         }
 
         #endregion

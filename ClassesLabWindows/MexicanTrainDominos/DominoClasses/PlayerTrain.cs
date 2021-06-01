@@ -72,7 +72,8 @@ namespace DominoClasses
 
             if(h.Equals(this.hand) || this.isOpen)
             {
-                retVal = true;
+                
+                retVal = IsPlayable(d, out mustFlip);
             }
 
             return retVal;

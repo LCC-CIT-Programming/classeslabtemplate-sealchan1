@@ -38,9 +38,9 @@ namespace CustomerProductTests
 
             // abstract class and interface tests
             //TestToString();
-            TestShippingCharge();
+            //TestShippingCharge();
             //TestCompareTo();
-            //TestForEach();
+            TestForEach();
 
             Console.ReadLine();
         }
@@ -68,7 +68,7 @@ namespace CustomerProductTests
         #endregion
 
 
-        /*
+        //*
         #region Interface Tests
         static void TestCompareTo()
         {

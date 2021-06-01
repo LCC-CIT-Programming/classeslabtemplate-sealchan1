@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DominoClasses
 {
-    public class Domino
+    public class Domino : IComparable<Domino>
     {
         private int side1;
         private int side2;
@@ -98,5 +98,12 @@ namespace DominoClasses
         {
             return String.Format("Side 1: {0}  Side 2: {1}", side1, side2);
         }
+
+        #region ---Interface Implementation---
+        public int CompareTo(Domino other)
+        {
+            return this.Score.CompareTo(other.Score);
+        }
+        #endregion
     }
 }
