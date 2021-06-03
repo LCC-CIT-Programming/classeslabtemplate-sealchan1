@@ -13,7 +13,7 @@ namespace MexicanTrainDominos
         static void Main(string[] args)
         {
             #region ---PlayerTrain Tests---
-            /*
+            //*
             TestOpenCloseIsOpen();
 
             ContinuePrompt();
@@ -62,7 +62,7 @@ namespace MexicanTrainDominos
             
             Random rndGen = new Random();
             int engVal = rndGen.Next(1, 7);
-            PlayerTrain test = new PlayerTrain(engVal);
+            PlayerTrain test = new PlayerTrain(new Hand(), engVal);
 
             Console.WriteLine("Expect: IsOpen = False");
             Console.WriteLine("Result: IsOpen = " + test.IsOpen.ToString());
@@ -92,13 +92,13 @@ namespace MexicanTrainDominos
             Console.WriteLine("Test PlayerTrain IsPlayable");
             Console.WriteLine();
 
-            Random rndGen = new Random();
-            int engVal = rndGen.Next(1, 7);
-            PlayerTrain test = new PlayerTrain(engVal);
-
             const int MAXDOTS = 6;
             BoneYard b = new BoneYard(MAXDOTS);
             b.Shuffle();
+
+            Random rndGen = new Random();
+            int engVal = rndGen.Next(1, 7);
+            PlayerTrain test = new PlayerTrain(new Hand(), engVal);
 
             const int LOOPS = 10;
 
@@ -264,7 +264,7 @@ namespace MexicanTrainDominos
             // Shuffled Boneyard
             BoneYard b = new BoneYard(MAXDOTS);
             b.Shuffle();
-
+            
             // Find Unplayable
             Hand h = new Hand();
             Domino d;

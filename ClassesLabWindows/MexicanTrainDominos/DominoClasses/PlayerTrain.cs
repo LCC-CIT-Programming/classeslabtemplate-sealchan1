@@ -10,8 +10,8 @@ namespace DominoClasses
     {
         #region ---Fields---
         
-        Hand hand;
-        bool isOpen;
+        private Hand hand;
+        private bool isOpen;
 
         #endregion
 
@@ -42,8 +42,9 @@ namespace DominoClasses
         /// PlayerTrain - Constructor
         /// </summary>
         /// <param name="engValue">Engine value</param>
-        public PlayerTrain(int engValue) : base(engValue)
+        public PlayerTrain(Hand h, int engValue) : base(engValue)
         {
+            this.hand = h;
         }
 
         #endregion

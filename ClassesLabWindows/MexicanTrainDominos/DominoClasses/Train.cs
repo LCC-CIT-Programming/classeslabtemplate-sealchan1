@@ -11,8 +11,8 @@ namespace DominoClasses
     {
         #region ---Fields---
         
-        List<Domino> dominos = new List<Domino>();
-        int engineValue;
+        private List<Domino> dominos = new List<Domino>();
+        private int engineValue;
 
         #endregion
 
@@ -79,7 +79,15 @@ namespace DominoClasses
         {
             get
             {
-                return dominos[this.Count - 1];
+                if(this.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return dominos[this.Count - 1];
+                }
+                
             }
         }
 
